@@ -1,23 +1,46 @@
 console.log("App.js is running!");
 
 // JSX - JavaScript XML
-var user = {
-  name: "elsayed",
+const user = {
+  name: "elsayed hussen",
   age: 32,
   location: "Egypt",
+  options: ["One", "Two"],
 };
-var userName = "elsayed hussen elsayed";
-var template = (
+const title = "User's Data";
+const subtitle = "This is The Options";
+function getLocation(location) {
+  if (location) {
+    return <li>Location : {location}</li>;
+  }
+}
+const getFirstName = (fullName) => {
+  return fullName.split(" ")[0];
+};
+// start template
+const template = (
   <div>
-    <h1>{userName}</h1>
-    <p> This is some info</p>
+    <h1>{title}!</h1>
+    <p> {subtitle}</p>
+    {user.options.length > 0 && (
+      <p>
+        {user.options[0]}
+        <br />
+        {user.options[1]}
+      </p>
+    )}
     <ul>
-      <li>{"Name : " + user.name}</li>
-      <li>{"Age : " + user.age}</li>
-      <li>{"Location : " + user.location}</li>
+      <li>{`Name : ${
+        getFirstName(user.name) ? getFirstName(user.name) : "Anonymous !"
+      }`}</li>
+      {user.age && user.age >= 18 && <li>Age : {user.age} </li>}
+      {getLocation(user.location)}
     </ul>
   </div>
 );
-var appRoot = document.getElementById("app");
+// end template
 
+// start render
+const appRoot = document.getElementById("app");
 ReactDOM.render(template, appRoot);
+// end render

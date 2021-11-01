@@ -4,23 +4,48 @@ console.log("App.js is running!");
 
 // JSX - JavaScript XML
 var user = {
-  name: "elsayed",
+  name: "elsayed hussen",
   age: 32,
-  location: "Egypt"
+  location: "Egypt",
+  options: ["One", "Two"]
 };
-var userName = "elsayed hussen elsayed";
+var title = "User's Data";
+var subtitle = "This is The Options";
+function getLocation(location) {
+  if (location) {
+    return React.createElement(
+      "li",
+      null,
+      "Location : ",
+      location
+    );
+  }
+}
+var getFirstName = function getFirstName(fullName) {
+  return fullName.split(" ")[0];
+};
+// start template
 var template = React.createElement(
   "div",
   null,
   React.createElement(
     "h1",
     null,
-    userName
+    title,
+    "!"
   ),
   React.createElement(
     "p",
     null,
-    " This is some info"
+    " ",
+    subtitle
+  ),
+  user.options.length > 0 && React.createElement(
+    "p",
+    null,
+    user.options[0],
+    React.createElement("br", null),
+    user.options[1]
   ),
   React.createElement(
     "ul",
@@ -28,20 +53,21 @@ var template = React.createElement(
     React.createElement(
       "li",
       null,
-      "Name : " + user.name
+      "Name : " + (getFirstName(user.name) ? getFirstName(user.name) : "Anonymous !")
     ),
-    React.createElement(
+    user.age && user.age >= 18 && React.createElement(
       "li",
       null,
-      "Age : " + user.age
+      "Age : ",
+      user.age,
+      " "
     ),
-    React.createElement(
-      "li",
-      null,
-      "Location : " + user.location
-    )
+    getLocation(user.location)
   )
 );
-var appRoot = document.getElementById("app");
+// end template
 
+// start render
+var appRoot = document.getElementById("app");
 ReactDOM.render(template, appRoot);
+// end render
