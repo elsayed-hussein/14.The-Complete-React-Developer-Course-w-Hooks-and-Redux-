@@ -29,26 +29,56 @@ const removeAll = () => {
   user.options = [];
   renderApp();
 };
-
+const onMakeDecision = () => {
+  const randomNum = Math.floor(Math.random() * user.options.length);
+  const option = user.options[randomNum];
+  alert(option);
+};
+let visibility = false;
+const toggleVisibility = () => {
+  console.log(visibility);
+  visibility = !visibility;
+  renderApp();
+};
 const renderApp = () => {
   // start template
   const template = (
     <div>
+      {visibility && (
+        <ul>
+          <li>{`Name : ${
+            getFirstName(user.name) ? getFirstName(user.name) : "Anonymous !"
+          }`}</li>
+          {user.age && user.age >= 18 && <li>Age : {user.age} </li>}
+          {getLocation(user.location)}
+        </ul>
+      )}
+
+      <button onClick={toggleVisibility}>
+        {visibility ? "hide data" : "show data"}
+      </button>
       <h1>{title}!</h1>
-      <button onClick={removeAll}>Remove All</button>
+
       <p>
         {user.options.length > 0
           ? "This is The Options"
           : "There is no Options"}
       </p>
-      <p>{user.options.length}</p>
       <ul>
-        <li>{`Name : ${
-          getFirstName(user.name) ? getFirstName(user.name) : "Anonymous !"
-        }`}</li>
-        {user.age && user.age >= 18 && <li>Age : {user.age} </li>}
-        {getLocation(user.location)}
+        {user.options.map((option) => {
+          return <li key={option}>{option}</li>;
+        })}
       </ul>
+
+      <p>{user.options.length}</p>
+      <button disabled={user.options.length === 0} onClick={onMakeDecision}>
+        What can i do !
+      </button>
+
+      <button disabled={user.options.length === 0} onClick={removeAll}>
+        Remove All
+      </button>
+
       <form onSubmit={onFormSubmit}>
         <input type="text" name="option" />
         <button>Add Option</button>
@@ -57,10 +87,10 @@ const renderApp = () => {
   );
 
   // end template
+  const appRoot = document.getElementById("app");
   ReactDOM.render(template, appRoot);
 };
 
 // start render
-const appRoot = document.getElementById("app");
 renderApp();
 // end render

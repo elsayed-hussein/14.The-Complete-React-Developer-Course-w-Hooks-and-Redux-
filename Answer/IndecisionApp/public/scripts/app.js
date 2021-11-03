@@ -36,34 +36,23 @@ var removeAll = function removeAll() {
   user.options = [];
   renderApp();
 };
-
+var onMakeDecision = function onMakeDecision() {
+  var randomNum = Math.floor(Math.random() * user.options.length);
+  var option = user.options[randomNum];
+  alert(option);
+};
+var visibility = false;
+var toggleVisibility = function toggleVisibility() {
+  console.log(visibility);
+  visibility = !visibility;
+  renderApp();
+};
 var renderApp = function renderApp() {
   // start template
   var template = React.createElement(
     "div",
     null,
-    React.createElement(
-      "h1",
-      null,
-      title,
-      "!"
-    ),
-    React.createElement(
-      "button",
-      { onClick: removeAll },
-      "Remove All"
-    ),
-    React.createElement(
-      "p",
-      null,
-      user.options.length > 0 ? "This is The Options" : "There is no Options"
-    ),
-    React.createElement(
-      "p",
-      null,
-      user.options.length
-    ),
-    React.createElement(
+    visibility && React.createElement(
       "ul",
       null,
       React.createElement(
@@ -81,6 +70,48 @@ var renderApp = function renderApp() {
       getLocation(user.location)
     ),
     React.createElement(
+      "button",
+      { onClick: toggleVisibility },
+      visibility ? "hide data" : "show data"
+    ),
+    React.createElement(
+      "h1",
+      null,
+      title,
+      "!"
+    ),
+    React.createElement(
+      "p",
+      null,
+      user.options.length > 0 ? "This is The Options" : "There is no Options"
+    ),
+    React.createElement(
+      "ul",
+      null,
+      user.options.map(function (option) {
+        return React.createElement(
+          "li",
+          { key: option },
+          option
+        );
+      })
+    ),
+    React.createElement(
+      "p",
+      null,
+      user.options.length
+    ),
+    React.createElement(
+      "button",
+      { disabled: user.options.length === 0, onClick: onMakeDecision },
+      "What can i do !"
+    ),
+    React.createElement(
+      "button",
+      { disabled: user.options.length === 0, onClick: removeAll },
+      "Remove All"
+    ),
+    React.createElement(
       "form",
       { onSubmit: onFormSubmit },
       React.createElement("input", { type: "text", name: "option" }),
@@ -93,10 +124,10 @@ var renderApp = function renderApp() {
   );
 
   // end template
+  var appRoot = document.getElementById("app");
   ReactDOM.render(template, appRoot);
 };
 
 // start render
-var appRoot = document.getElementById("app");
 renderApp();
 // end render
