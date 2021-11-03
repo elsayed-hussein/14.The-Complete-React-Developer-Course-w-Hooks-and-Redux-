@@ -32,6 +32,10 @@ var onFormSubmit = function onFormSubmit(e) {
   }
   renderApp();
 };
+var removeAll = function removeAll() {
+  user.options = [];
+  renderApp();
+};
 
 var renderApp = function renderApp() {
   // start template
@@ -43,6 +47,11 @@ var renderApp = function renderApp() {
       null,
       title,
       "!"
+    ),
+    React.createElement(
+      "button",
+      { onClick: removeAll },
+      "Remove All"
     ),
     React.createElement(
       "p",
