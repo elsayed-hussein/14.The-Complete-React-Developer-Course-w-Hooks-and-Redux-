@@ -5,7 +5,7 @@ const user = {
   name: "elsayed hussen",
   age: 32,
   location: "Egypt",
-  options: ["One", "Two"],
+  options: [],
 };
 const title = "User's Data";
 const subtitle = "This is The Options";
@@ -17,30 +17,42 @@ function getLocation(location) {
 const getFirstName = (fullName) => {
   return fullName.split(" ")[0];
 };
-// start template
-const template = (
-  <div>
-    <h1>{title}!</h1>
-    <p> {subtitle}</p>
-    {user.options.length > 0 && (
-      <p>
-        {user.options[0]}
-        <br />
-        {user.options[1]}
-      </p>
-    )}
-    <ul>
-      <li>{`Name : ${
-        getFirstName(user.name) ? getFirstName(user.name) : "Anonymous !"
-      }`}</li>
-      {user.age && user.age >= 18 && <li>Age : {user.age} </li>}
-      {getLocation(user.location)}
-    </ul>
-  </div>
-);
-// end template
+const onFormSubmit = (e) => {
+  e.preventDefault();
+  const option = e.target.elements.option.value;
+  if (option) {
+    user.options.push(option);
+    e.target.elements.option.value = "";
+  }
+  renderApp();
+};
+
+const renderApp = () => {
+  // start template
+  const template = (
+    <div>
+      <h1>{title}!</h1>
+      <p> {subtitle}</p>
+      <p>{user.options.length}</p>
+      <ul>
+        <li>{`Name : ${
+          getFirstName(user.name) ? getFirstName(user.name) : "Anonymous !"
+        }`}</li>
+        {user.age && user.age >= 18 && <li>Age : {user.age} </li>}
+        {getLocation(user.location)}
+      </ul>
+      <form onSubmit={onFormSubmit}>
+        <input type="text" name="option" />
+        <button>Add Option</button>
+      </form>
+    </div>
+  );
+
+  // end template
+  ReactDOM.render(template, appRoot);
+};
 
 // start render
 const appRoot = document.getElementById("app");
-ReactDOM.render(template, appRoot);
+renderApp();
 // end render
