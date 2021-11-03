@@ -10,7 +10,6 @@ var user = {
   options: []
 };
 var title = "User's Data";
-var subtitle = "This is The Options";
 function getLocation(location) {
   if (location) {
     return React.createElement(
@@ -48,8 +47,7 @@ var renderApp = function renderApp() {
     React.createElement(
       "p",
       null,
-      " ",
-      subtitle
+      user.options.length > 0 ? "This is The Options" : "There is no Options"
     ),
     React.createElement(
       "p",

@@ -8,7 +8,6 @@ const user = {
   options: [],
 };
 const title = "User's Data";
-const subtitle = "This is The Options";
 function getLocation(location) {
   if (location) {
     return <li>Location : {location}</li>;
@@ -32,7 +31,11 @@ const renderApp = () => {
   const template = (
     <div>
       <h1>{title}!</h1>
-      <p> {subtitle}</p>
+      <p>
+        {user.options.length > 0
+          ? "This is The Options"
+          : "There is no Options"}
+      </p>
       <p>{user.options.length}</p>
       <ul>
         <li>{`Name : ${
