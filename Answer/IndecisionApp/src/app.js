@@ -64,7 +64,7 @@ class AddOption extends React.Component {
 }
 class IndecisionApp extends React.Component {
   render() {
-    const title = "Indecision";
+    const title = "Indecision App";
     const subTitle = "put your life in the hand of a computer";
     const options = ["one", "tow", "three"];
     return (
