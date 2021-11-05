@@ -23,7 +23,7 @@ npm list -g --depth=0
 └── yarn@1.22.17
 
 ..............................................
-"test": "echo \"Error: no test specified\" && exit 1"
+
 npm list -g --depth=0
 ├── corepack@0.10.0
 ├── npm@8.1.0
@@ -31,14 +31,50 @@ npm list -g --depth=0
 
 ..............................................
 
-npm i babel-cli@6.24.1 live-server
+npm install babel-cli@6.24.1 live-server webpack validator@8.0.0 react@15.6.1 react-dom@15.6.1 babel-core@6.25.0 babel-loader@7.1.1
+
+
 
 ..............................................
 
 npm audit fix --force
 
 ..............................................
-"scripts"{
-"sever":"live-server ./public/",
-"build":"babel ./src/app.js --out-file=./public/scripts/app.js --presets=env,react --watch"
+
+"scripts": {
+"server": "live-server ./public/",
+"bulid":"webpack",
+"build-babel": "babel ./src/app.js --out-file=./public/scripts/app.js --presets=env,react --watch"
 }
+
+..............................................
+
+const path = require('path');
+
+module.exports = {
+  entry: './src/app.js',
+  output: {
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [{
+      loader: 'babel-loader',
+      test: /\.js$/,
+      exclude: /node_modules/
+    }]
+  }
+};
+
+..............................................
+
+{
+  "presets": [
+    "env",
+    "react"
+  ]
+}
+
+..............................................
+
+..............................................
