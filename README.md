@@ -31,7 +31,7 @@ npm list -g --depth=0
 
 ..............................................
 
-npm install babel-cli@6.24.1 live-server webpack validator@8.0.0 react@15.6.1 react-dom@15.6.1 babel-core@6.25.0 babel-loader@7.1.1 webpack-dev-server@2.5.1
+npm install babel-cli@6.24.1 live-server webpack validator@8.0.0 react@15.6.1 react-dom@15.6.1 babel-core@6.25.0 babel-loader@7.1.1 webpack-dev-server@2.5.1 react-modal@2.2.2
 
 ..............................................
 
@@ -91,15 +91,14 @@ contentBase: path.join(**dirname, 'public')
 ..............................................
 
 {
-  "presets": [
-    "env",
-    "react"
-  ],
-  "plugins": [
-    "transform-class-properties"
-  ]
+"presets": [
+"env",
+"react"
+],
+"plugins": [
+"transform-class-properties"
+]
 }
-
 
 ..............................................
 
