@@ -50,11 +50,6 @@ var Action = function (_React$Component2) {
   }
 
   _createClass(Action, [{
-    key: "handlePick",
-    value: function handlePick() {
-      alert("handlePick");
-    }
-  }, {
     key: "render",
     value: function render() {
       return React.createElement(
@@ -62,7 +57,10 @@ var Action = function (_React$Component2) {
         null,
         React.createElement(
           "button",
-          { onClick: this.handlePick },
+          {
+            disabled: !this.props.hasOptions,
+            onClick: this.props.handelPick
+          },
           "What Should I do ?"
         )
       );
@@ -98,22 +96,13 @@ var Option = function (_React$Component3) {
 var Options = function (_React$Component4) {
   _inherits(Options, _React$Component4);
 
-  function Options(props) {
+  function Options() {
     _classCallCheck(this, Options);
 
-    var _this4 = _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).call(this, props));
-
-    _this4.handleRemoveAll = _this4.handleRemoveAll.bind(_this4);
-    return _this4;
+    return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).apply(this, arguments));
   }
 
   _createClass(Options, [{
-    key: "handleRemoveAll",
-    value: function handleRemoveAll() {
-      console.log(this.props.options);
-      // alert("handleRemoveAll");
-    }
-  }, {
     key: "render",
     value: function render() {
       return React.createElement(
@@ -122,12 +111,16 @@ var Options = function (_React$Component4) {
         React.createElement(
           "h3",
           null,
-          "List Items = ",
-          this.props.options.length
+          "List Of ",
+          this.props.options.length,
+          " Items"
         ),
         React.createElement(
           "button",
-          { onClick: this.handleRemoveAll },
+          {
+            disabled: !this.props.hasOptions,
+            onClick: this.props.handelDeleteOptions
+          },
           "Remove All"
         ),
         this.props.options.map(function (option) {
@@ -143,10 +136,16 @@ var Options = function (_React$Component4) {
 var AddOption = function (_React$Component5) {
   _inherits(AddOption, _React$Component5);
 
-  function AddOption() {
+  function AddOption(props) {
     _classCallCheck(this, AddOption);
 
-    return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
+    var _this5 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+
+    _this5.handleAddOption = _this5.handleAddOption.bind(_this5);
+    _this5.state = {
+      error: undefined
+    };
+    return _this5;
   }
 
   _createClass(AddOption, [{
@@ -155,10 +154,13 @@ var AddOption = function (_React$Component5) {
       e.preventDefault();
 
       var option = e.target.elements.option.value.trim();
-
-      if (option) {
-        alert(option);
-      }
+      var error = this.props.handelAddOption(option);
+      this.setState(function () {
+        return {
+          error: error
+        };
+      });
+      e.target.elements.option.value = "";
     }
   }, {
     key: "render",
@@ -166,6 +168,11 @@ var AddOption = function (_React$Component5) {
       return React.createElement(
         "div",
         null,
+        this.state.error && React.createElement(
+          "p",
+          null,
+          this.state.error
+        ),
         React.createElement(
           "form",
           { onSubmit: this.handleAddOption },
@@ -186,25 +193,67 @@ var AddOption = function (_React$Component5) {
 var IndecisionApp = function (_React$Component6) {
   _inherits(IndecisionApp, _React$Component6);
 
-  function IndecisionApp() {
+  function IndecisionApp(props) {
     _classCallCheck(this, IndecisionApp);
 
-    return _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).apply(this, arguments));
+    var _this6 = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
+
+    _this6.handelDeleteOptions = _this6.handelDeleteOptions.bind(_this6);
+    _this6.handelPick = _this6.handelPick.bind(_this6);
+    _this6.handelAddOption = _this6.handelAddOption.bind(_this6);
+    _this6.state = {
+      options: []
+    };
+    return _this6;
   }
 
   _createClass(IndecisionApp, [{
+    key: "handelDeleteOptions",
+    value: function handelDeleteOptions() {
+      this.setState(function () {
+        return {
+          options: []
+        };
+      });
+    }
+  }, {
+    key: "handelPick",
+    value: function handelPick() {
+      alert(this.state.options[Math.floor(Math.random() * this.state.options.length)]);
+    }
+  }, {
+    key: "handelAddOption",
+    value: function handelAddOption(option) {
+      if (!option) {
+        return "Enter Valid value to Add";
+      } else if (this.state.options.indexOf(option) > -1) {
+        return "this option already exists";
+      }
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.concat(option)
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var title = "Indecision App";
       var subTitle = "put your life in the hand of a computer";
-      var options = ["one", "tow", "three"];
       return React.createElement(
         "div",
         null,
         React.createElement(Header, { title: title, subtitle: subTitle }),
-        React.createElement(Action, null),
-        React.createElement(Options, { options: options }),
-        React.createElement(AddOption, null)
+        React.createElement(Action, {
+          handelPick: this.handelPick,
+          hasOptions: this.state.options.length > 0
+        }),
+        React.createElement(Options, {
+          options: this.state.options,
+          hasOptions: this.state.options.length > 0,
+          handelDeleteOptions: this.handelDeleteOptions
+        }),
+        React.createElement(AddOption, { handelAddOption: this.handelAddOption })
       );
     }
   }]);
