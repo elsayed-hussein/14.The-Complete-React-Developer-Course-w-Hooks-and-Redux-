@@ -31,9 +31,7 @@ npm list -g --depth=0
 
 ..............................................
 
-npm install babel-cli@6.24.1 live-server webpack validator@8.0.0 react@15.6.1 react-dom@15.6.1 babel-core@6.25.0 babel-loader@7.1.1
-
-
+npm install babel-cli@6.24.1 live-server webpack validator@8.0.0 react@15.6.1 react-dom@15.6.1 babel-core@6.25.0 babel-loader@7.1.1 webpack-dev-server@2.5.1
 
 ..............................................
 
@@ -41,10 +39,30 @@ npm audit fix --force
 
 ..............................................
 
+{
+"name": "indecision-app",
+"version": "1.0.0",
+"main": "index.js",
+"author": "Andrew Mead",
+"license": "MIT",
 "scripts": {
-"server": "live-server ./public/",
-"bulid":"webpack",
-"build-babel": "babel ./src/app.js --out-file=./public/scripts/app.js --presets=env,react --watch"
+"serve": "live-server public/",
+"build": "webpack",
+"dev-server": "webpack-dev-server"
+},
+"dependencies": {
+"babel-cli": "6.24.1",
+"babel-core": "6.25.0",
+"babel-loader": "7.1.1",
+"babel-preset-env": "1.5.2",
+"babel-preset-react": "6.24.1",
+"live-server": "^1.2.0",
+"react": "15.6.1",
+"react-dom": "15.6.1",
+"validator": "8.0.0",
+"webpack": "3.1.0",
+"webpack-dev-server": "2.5.1"
+}
 }
 
 ..............................................
@@ -52,27 +70,31 @@ npm audit fix --force
 const path = require('path');
 
 module.exports = {
-  entry: './src/app.js',
-  output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
-  },
-  module: {
-    rules: [{
-      loader: 'babel-loader',
-      test: /\.js$/,
-      exclude: /node_modules/
-    }]
-  }
+entry: './src/app.js',
+output: {
+path: path.join(**dirname, 'public'),
+filename: 'bundle.js'
+},
+module: {
+rules: [{
+loader: 'babel-loader',
+test: /\.js$/,
+exclude: /node_modules/
+}]
+},
+devtool: 'cheap-module-eval-source-map',
+devServer: {
+contentBase: path.join(**dirname, 'public')
+}
 };
 
 ..............................................
 
 {
-  "presets": [
-    "env",
-    "react"
-  ]
+"presets": [
+"env",
+"react"
+]
 }
 
 ..............................................
