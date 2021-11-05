@@ -23,7 +23,7 @@ npm list -g --depth=0
 └── yarn@1.22.17
 
 ..............................................
-
+"test": "echo \"Error: no test specified\" && exit 1"
 npm list -g --depth=0
 ├── corepack@0.10.0
 ├── npm@8.1.0
@@ -38,3 +38,7 @@ npm i babel-cli@6.24.1 live-server
 npm audit fix --force
 
 ..............................................
+"scripts"{
+"sever":"live-server ./public/",
+"build":"babel ./src/app.js --out-file=./public/scripts/app.js --presets=env,react --watch"
+}

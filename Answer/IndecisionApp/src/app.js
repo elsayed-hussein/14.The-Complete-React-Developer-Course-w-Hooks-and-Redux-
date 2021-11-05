@@ -35,7 +35,7 @@ const Option = (props) => {
 const Options = (props) => {
   return (
     <div>
-      <h3>List Of {props.options.length} Items</h3>
+      <h3>Number Of Items : {props.options.length} .</h3>
       <button disabled={!props.hasOptions} onClick={props.handelDeleteOptions}>
         Remove All
       </button>

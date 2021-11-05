@@ -61,9 +61,9 @@ var Options = function Options(props) {
     React.createElement(
       "h3",
       null,
-      "List Of ",
+      "Number Of Items : ",
       props.options.length,
-      " Items"
+      " ."
     ),
     React.createElement(
       "button",
