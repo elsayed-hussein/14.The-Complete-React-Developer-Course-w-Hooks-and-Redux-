@@ -91,11 +91,15 @@ contentBase: path.join(**dirname, 'public')
 ..............................................
 
 {
-"presets": [
-"env",
-"react"
-]
+  "presets": [
+    "env",
+    "react"
+  ],
+  "plugins": [
+    "transform-class-properties"
+  ]
 }
+
 
 ..............................................
 
