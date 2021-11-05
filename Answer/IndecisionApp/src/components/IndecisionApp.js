@@ -4,19 +4,36 @@ import Header from "./Header";
 import Action from "./Action";
 import Options from "./Options";
 
-
 class IndecisionApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handelDeleteOptions = this.handelDeleteOptions.bind(this);
-    this.handelDeleteOption = this.handelDeleteOption.bind(this);
-    this.handelPick = this.handelPick.bind(this);
-    this.handelAddOption = this.handelAddOption.bind(this);
-    this.state = {
+  state = {
+    options: [],
+  };
+  handelDeleteOptions = () => {
+    this.setState(() => ({
       options: [],
-    };
-  }
-  componentDidMount() {
+    }));
+  };
+  handelDeleteOption = (optionToRemove) => {
+    this.setState((prevState) => ({
+      options: prevState.options.filter((option) => optionToRemove !== option),
+    }));
+  };
+  handelPick = () => {
+    alert(
+      this.state.options[Math.floor(Math.random() * this.state.options.length)]
+    );
+  };
+  handelAddOption = (option) => {
+    if (!option) {
+      return "Enter Valid value to Add";
+    } else if (this.state.options.indexOf(option) > -1) {
+      return "this option already exists";
+    }
+    this.setState((prevState) => ({
+      options: prevState.options.concat(option),
+    }));
+  };
+  componentDidMount = () => {
     try {
       const json = localStorage.getItem("options");
       const options = JSON.parse(json);
@@ -26,40 +43,14 @@ class IndecisionApp extends React.Component {
     } catch (e) {
       console.log(e);
     }
-  }
-  componentDidUpdate(prevProps, prevState) {
+  };
+  componentDidUpdate = (prevProps, prevState) => {
     if (prevState.options.length !== this.state.options.length) {
       const json = JSON.stringify(this.state.options);
       localStorage.setItem("options", json);
     }
-  }
-  handelDeleteOptions() {
-    this.setState(() => ({
-      options: [],
-    }));
-  }
-  handelDeleteOption(optionToRemove) {
-    this.setState((prevState) => ({
-      options: prevState.options.filter((option) => optionToRemove !== option),
-    }));
-  }
-  handelPick() {
-    alert(
-      this.state.options[Math.floor(Math.random() * this.state.options.length)]
-    );
-  }
-  handelAddOption(option) {
-    if (!option) {
-      return "Enter Valid value to Add";
-    } else if (this.state.options.indexOf(option) > -1) {
-      return "this option already exists";
-    }
-    this.setState((prevState) => ({
-      options: prevState.options.concat(option),
-    }));
-  }
-
-  render() {
+  };
+  render = () => {
     const subTitle = "put your life in the hand of a computer";
     return (
       <div>
@@ -78,7 +69,7 @@ class IndecisionApp extends React.Component {
         <AddOption handelAddOption={this.handelAddOption} />
       </div>
     );
-  }
+  };
 }
 
 export default IndecisionApp;
