@@ -2,7 +2,7 @@
   "name": "boilerplate",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Andrew Mead",
+  "author": "Elsayed Hussen",
   "license": "MIT",
   "scripts": {
     "serve": "live-server public/",
