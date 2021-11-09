@@ -19,6 +19,7 @@
 //   console.log(`It's ${temperature} in ${city}.`);
 // }
 
+<<<<<<< HEAD
 // const book = {
 //   title: 'Ego is the Enemy',
 //   author: 'Ryan Holiday',
@@ -41,5 +42,16 @@
 
 const item = ['Coffee (iced)', '$3.00', '$3.50', '$3.75'];
 const [itemName, , mediumPrice] = item;
+=======
+const book = {
+  title: "Ego is the Enemy",
+  author: "Ryan Holiday",
+  publisher: {
+    // name: "Penguin",
+  },
+};
+
+const { name: publisherName = "Self-Published" } = book.publisher;
+>>>>>>> e7fa9db0dd7e5f7554da2754ceac3392aee08d4b
 
 console.log(`A medium ${itemName} costs ${mediumPrice}`);
